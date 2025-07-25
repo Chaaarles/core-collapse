@@ -1,11 +1,12 @@
 [gd_scene load_steps=15 format=4 uid="uid://bbbfkvw3lvcx0"]
 
 [ext_resource type="Texture2D" uid="uid://dtypk4fslq8o1" path="res://sprites/tile.png" id="1_jyhfs"]
-[ext_resource type="Script" uid="uid://dot2xn40e5qa0" path="res://scripts/player-movement.gd" id="1_sugp2"]
 [ext_resource type="Texture2D" uid="uid://reo1t30rtpmi" path="res://sprites/robot.png" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://ctn4mw0hcekl1" path="res://scenes/core.tscn" id="3_sugp2"]
+[ext_resource type="PackedScene" uid="uid://bqu8gv055x7mf" path="res://scenes/player.tscn" id="3_tefeu"]
 [ext_resource type="Script" uid="uid://b4tw8rvh1cf61" path="res://scripts/game_manager.gd" id="5_tbgi4"]
 [ext_resource type="LabelSettings" uid="uid://cuerpj3bw3h15" path="res://label-settings.tres" id="6_tefeu"]
+[ext_resource type="AudioStream" uid="uid://boxpbj6lvg7rx" path="res://audio/Mission Plausible.ogg" id="7_o6xl0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tbgi4"]
 texture = ExtResource("1_jyhfs")
@@ -18,9 +19,6 @@ texture = ExtResource("2_sugp2")
 [sub_resource type="TileSet" id="TileSet_jyhfs"]
 sources/2 = SubResource("TileSetAtlasSource_sugp2")
 sources/0 = SubResource("TileSetAtlasSource_tbgi4")
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_sugp2"]
-radius = 4.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tefeu"]
 bg_color = Color(0.113725, 0.168627, 0.32549, 1)
@@ -43,20 +41,8 @@ z_index = -10
 tile_map_data = PackedByteArray("AAAHAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAADAAAAAAAAAAAAAAACAAAAAAAAAAAAAAABAAAAAAAAAAAAAAABAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAcAAAAAAAAAAAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAHAAYAAAAAAAAAAAAHAAUAAAAAAAAAAAAHAAQAAAAAAAAAAAAHAAMAAAAAAAAAAAAHAAIAAAAAAAAAAAAHAAEAAAAAAAAAAAAGAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAADAAEAAAAAAAAAAAACAAEAAAAAAAAAAAABAAIAAAAAAAAAAAABAAMAAAAAAAAAAAACAAMAAAAAAAAAAAADAAMAAAAAAAAAAAADAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAAFAAIAAAAAAAAAAAAGAAIAAAAAAAAAAAACAAIAAAAAAAAAAAABAAQAAAAAAAAAAAACAAQAAAAAAAAAAAADAAQAAAAAAAAAAAAEAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAGAAMAAAAAAAAAAAAGAAQAAAAAAAAAAAAGAAUAAAAAAAAAAAAFAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAADAAUAAAAAAAAAAAACAAUAAAAAAAAAAAABAAUAAAAAAAAAAAABAAYAAAAAAAAAAAACAAYAAAAAAAAAAAADAAYAAAAAAAAAAAAEAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAAGAAYAAAAAAAAAAAAFAAUAAAAAAAAAAAAEAAUAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_jyhfs")
 
-[node name="Player" type="CharacterBody2D" parent="."]
+[node name="Player" parent="." instance=ExtResource("3_tefeu")]
 position = Vector2(64, 64)
-motion_mode = 1
-script = ExtResource("1_sugp2")
-speed = 80.0
-dash_speed = 240
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-shape = SubResource("CircleShape2D_sugp2")
-
-[node name="Sprite2D" type="Sprite2D" parent="Player"]
-texture_filter = 1
-scale = Vector2(1.0014, 1)
-texture = ExtResource("2_sugp2")
 
 [node name="Core_Left" parent="." instance=ExtResource("3_sugp2")]
 position = Vector2(16, 56)
@@ -175,3 +161,8 @@ shape = SubResource("RectangleShape2D_o6xl0")
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="WALL"]
 position = Vector2(138, 56)
 shape = SubResource("RectangleShape2D_o6xl0")
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_o6xl0")
+autoplay = true
+bus = &"Music"

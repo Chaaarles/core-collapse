@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dohjgrg0mmv3r"
-path="res://.godot/imported/pickupCoin.wav-93f75bd63ce09d869cd6c81f793b4d14.sample"
+uid="uid://bglpkvr6ek1wi"
+path="res://.godot/imported/repair-sound.wav-1a752693c1495d77f0fe5b20e9f6d82b.sample"
 
 [deps]
 
-source_file="res://scenes/pickupCoin.wav"
-dest_files=["res://.godot/imported/pickupCoin.wav-93f75bd63ce09d869cd6c81f793b4d14.sample"]
+source_file="res://audio/repair-sound.wav"
+dest_files=["res://.godot/imported/repair-sound.wav-1a752693c1495d77f0fe5b20e9f6d82b.sample"]
 
 [params]
 

@@ -4,6 +4,9 @@ extends Node2D
 @export var initial_color: Color = Color(1.0, 1.0, 0.25)
 @export var enc_color: Color = Color(0.3882353, 0.003921569, 0.003921569)
 
+@onready var repair_audio_player: AudioStreamPlayer2D = $RepairAudioStream
+@onready var decay_audio_player: AudioStreamPlayer2D = $DecayAudioStream
+
 var decay_time: float      = 3.0
 var decay_countdown: float = 0.0
 var time: float            = 0.0
@@ -31,7 +34,6 @@ func _process(delta: float) -> void:
 		if decay_countdown <= 0.0:
 			decay_countdown = 0.0
 			decayed_signal.emit()
-			print("Game Over")
 
 	if (decaying):
 		brokenCore.visible = true
@@ -67,18 +69,17 @@ func startDecay(duration: float) -> void:
 	if (decay_countdown <= 0.0):
 		decay_time = duration
 		decay_countdown = decay_time
-		print("Decay started")
+		decay_audio_player.play()
+
 
 func repair() -> void:
 	if (decay_countdown > 0.0):
 		decay_countdown = 0.0
-		print("Decay repaired")
 		brokenCore.visible = false
 		arc.visible = false
 		arcOutline.visible = false
 		repair_signal.emit()
-	else:
-		print("No decay to repair")
+		repair_audio_player.play()
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
@@ -97,11 +98,11 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 
 func body_is_player(body: Node2D) -> bool:
 	return body.name == "Player"
-	
-				
+
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("repair") && is_player_inside:
 		repair()
-		
+
 signal repair_signal
 signal decayed_signal

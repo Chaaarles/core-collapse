@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://bqu8gv055x7mf"]
+
+[ext_resource type="Script" uid="uid://dot2xn40e5qa0" path="res://scripts/player-movement.gd" id="1_g2els"]
+[ext_resource type="Texture2D" uid="uid://reo1t30rtpmi" path="res://sprites/robot.png" id="2_qhqgy"]
+[ext_resource type="AudioStream" uid="uid://bpymrb40pbwjf" path="res://audio/engine-sound.ogg" id="3_dqkch"]
+[ext_resource type="AudioStream" uid="uid://bwlsyakdua4cb" path="res://audio/boost-sound.ogg" id="4_qlg0r"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sugp2"]
+radius = 4.0
+
+[node name="Player" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_g2els")
+speed = 80.0
+dash_speed = 240
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_sugp2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(1.0014, 1)
+texture = ExtResource("2_qhqgy")
+
+[node name="MovementAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_dqkch")
+bus = &"SFX"
+
+[node name="BoostAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_qlg0r")
+volume_db = -3.986
+bus = &"SFX"
