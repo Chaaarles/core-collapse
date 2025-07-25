@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://cuerpj3bw3h15"]
+
+[ext_resource type="FontFile" uid="uid://325fqqfa1k40" path="res://fonts/NotJamChunkySans6/NotJamChunkySansOriginal.ttf" id="1_qsq38"]
+
+[resource]
+line_spacing = 0.0
+font = ExtResource("1_qsq38")
+font_size = 6
+shadow_size = 0

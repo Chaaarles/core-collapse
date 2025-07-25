@@ -1,0 +1,177 @@
+[gd_scene load_steps=15 format=4 uid="uid://bbbfkvw3lvcx0"]
+
+[ext_resource type="Texture2D" uid="uid://dtypk4fslq8o1" path="res://sprites/tile.png" id="1_jyhfs"]
+[ext_resource type="Script" uid="uid://dot2xn40e5qa0" path="res://scripts/player-movement.gd" id="1_sugp2"]
+[ext_resource type="Texture2D" uid="uid://reo1t30rtpmi" path="res://sprites/robot.png" id="2_sugp2"]
+[ext_resource type="PackedScene" uid="uid://ctn4mw0hcekl1" path="res://scenes/core.tscn" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://b4tw8rvh1cf61" path="res://scripts/game_manager.gd" id="5_tbgi4"]
+[ext_resource type="LabelSettings" uid="uid://cuerpj3bw3h15" path="res://label-settings.tres" id="6_tefeu"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tbgi4"]
+texture = ExtResource("1_jyhfs")
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sugp2"]
+texture = ExtResource("2_sugp2")
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_jyhfs"]
+sources/2 = SubResource("TileSetAtlasSource_sugp2")
+sources/0 = SubResource("TileSetAtlasSource_tbgi4")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sugp2"]
+radius = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tefeu"]
+bg_color = Color(0.113725, 0.168627, 0.32549, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o6xl0"]
+bg_color = Color(0.160784, 0.678431, 1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tefeu"]
+size = Vector2(128, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o6xl0"]
+size = Vector2(20, 152)
+
+[node name="Node2D" type="Node2D"]
+y_sort_enabled = true
+texture_filter = 1
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+z_index = -10
+tile_map_data = PackedByteArray("AAAHAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAADAAAAAAAAAAAAAAACAAAAAAAAAAAAAAABAAAAAAAAAAAAAAABAAEAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAcAAAAAAAAAAAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAHAAYAAAAAAAAAAAAHAAUAAAAAAAAAAAAHAAQAAAAAAAAAAAAHAAMAAAAAAAAAAAAHAAIAAAAAAAAAAAAHAAEAAAAAAAAAAAAGAAEAAAAAAAAAAAAFAAEAAAAAAAAAAAAEAAEAAAAAAAAAAAADAAEAAAAAAAAAAAACAAEAAAAAAAAAAAABAAIAAAAAAAAAAAABAAMAAAAAAAAAAAACAAMAAAAAAAAAAAADAAMAAAAAAAAAAAADAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAAFAAIAAAAAAAAAAAAGAAIAAAAAAAAAAAACAAIAAAAAAAAAAAABAAQAAAAAAAAAAAACAAQAAAAAAAAAAAADAAQAAAAAAAAAAAAEAAMAAAAAAAAAAAAFAAMAAAAAAAAAAAAGAAMAAAAAAAAAAAAGAAQAAAAAAAAAAAAGAAUAAAAAAAAAAAAFAAQAAAAAAAAAAAAEAAQAAAAAAAAAAAADAAUAAAAAAAAAAAACAAUAAAAAAAAAAAABAAUAAAAAAAAAAAABAAYAAAAAAAAAAAACAAYAAAAAAAAAAAADAAYAAAAAAAAAAAAEAAYAAAAAAAAAAAAFAAYAAAAAAAAAAAAGAAYAAAAAAAAAAAAFAAUAAAAAAAAAAAAEAAUAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_jyhfs")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(64, 64)
+motion_mode = 1
+script = ExtResource("1_sugp2")
+speed = 80.0
+dash_speed = 240
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("CircleShape2D_sugp2")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture_filter = 1
+scale = Vector2(1.0014, 1)
+texture = ExtResource("2_sugp2")
+
+[node name="Core_Left" parent="." instance=ExtResource("3_sugp2")]
+position = Vector2(16, 56)
+
+[node name="Core_Right" parent="." instance=ExtResource("3_sugp2")]
+position = Vector2(112, 56)
+
+[node name="Core_Upper_Left" parent="." instance=ExtResource("3_sugp2")]
+position = Vector2(32, 16)
+
+[node name="Core_Upper_Right" parent="." instance=ExtResource("3_sugp2")]
+position = Vector2(96, 16)
+
+[node name="Core_Lower_Left" parent="." instance=ExtResource("3_sugp2")]
+position = Vector2(32, 96)
+
+[node name="Core_Lower_right" parent="." instance=ExtResource("3_sugp2")]
+position = Vector2(96, 96)
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("5_tbgi4")
+cores = Array[NodePath]([NodePath("../Core_Left"), NodePath("../Core_Right"), NodePath("../Core_Upper_Left"), NodePath("../Core_Upper_Right"), NodePath("../Core_Lower_Left"), NodePath("../Core_Lower_right")])
+initial_decay_interval = 4.0
+difficulty_curve = 2.0
+time_to_max_difficulty = 60.0
+
+[node name="Control" type="Control" parent="."]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+offset_top = 112.0
+offset_right = 128.0
+offset_bottom = 128.0
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Control/ColorRect"]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/ColorRect/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/ColorRect/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="Control/ColorRect/MarginContainer/HBoxContainer/VBoxContainer"]
+texture_filter = 1
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Boost"
+label_settings = ExtResource("6_tefeu")
+max_lines_visible = 1
+
+[node name="BoostBar" type="ProgressBar" parent="Control/ColorRect/MarginContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 6)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_tefeu")
+theme_override_styles/fill = SubResource("StyleBoxFlat_o6xl0")
+value = 50.0
+show_percentage = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/ColorRect/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Control/ColorRect/MarginContainer/HBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Score:"
+label_settings = ExtResource("6_tefeu")
+
+[node name="ScoreLabel" type="Label" parent="Control/ColorRect/MarginContainer/HBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("6_tefeu")
+
+[node name="WALL" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WALL"]
+position = Vector2(64, -10)
+shape = SubResource("RectangleShape2D_tefeu")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="WALL"]
+position = Vector2(64, 122)
+shape = SubResource("RectangleShape2D_tefeu")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="WALL"]
+position = Vector2(-10, 56)
+shape = SubResource("RectangleShape2D_o6xl0")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="WALL"]
+position = Vector2(138, 56)
+shape = SubResource("RectangleShape2D_o6xl0")

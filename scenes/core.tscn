@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://ctn4mw0hcekl1"]
+
+[ext_resource type="PackedScene" uid="uid://ccarr0xthxeyv" path="res://scenes/arc.tscn" id="1_5634n"]
+[ext_resource type="Script" uid="uid://d2hee3lsnyr00" path="res://scripts/core.gd" id="1_hlf4f"]
+[ext_resource type="Texture2D" uid="uid://bhptwpmhxxg0c" path="res://sprites/core.png" id="3_c8oal"]
+[ext_resource type="Texture2D" uid="uid://chk46jpllonjg" path="res://sprites/broken_core.png" id="4_gmp2s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gmp2s"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5634n"]
+radius = 5.0
+
+[node name="Core" type="Node2D"]
+script = ExtResource("1_hlf4f")
+initial_color = Color(1, 1, 0.278431, 1)
+enc_color = Color(0.796858, 0.00680607, 0.006589, 1)
+
+[node name="ArcOutline" parent="." instance=ExtResource("1_5634n")]
+visible = false
+width = 5.0
+color = Color(0, 0, 0, 1)
+
+[node name="Arc" parent="." instance=ExtResource("1_5634n")]
+visible = false
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_gmp2s")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+input_pickable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("CircleShape2D_5634n")
+
+[node name="Core" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("3_c8oal")
+
+[node name="BrokenCore" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+texture = ExtResource("4_gmp2s")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="input_event" from="StaticBody2D" to="." method="_on_static_body_2d_input_event"]

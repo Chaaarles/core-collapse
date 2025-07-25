@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://fbhmmjfsl2o3"]
+
+[ext_resource type="Script" uid="uid://vrsq2xxrklgk" path="res://scripts/trail.gd" id="1_abn3g"]
+[ext_resource type="Texture2D" uid="uid://bp805jhp3erf1" path="res://icon.svg" id="2_6s3rl"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_abn3g")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.470588)
+texture_filter = 1
+texture = ExtResource("2_6s3rl")

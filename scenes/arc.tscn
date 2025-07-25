@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccarr0xthxeyv"]
+
+[ext_resource type="Script" uid="uid://csqku1gw8eerk" path="res://scripts/arc.gd" id="1_tj8gn"]
+
+[node name="Arc" type="Node2D"]
+script = ExtResource("1_tj8gn")
+width = 3.0
