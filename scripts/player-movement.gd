@@ -79,7 +79,7 @@ func _physics_process(delta: float) -> void:
 		audio_ramp_factor = max(0.0, audio_ramp_factor - delta * 2.0)
 
 	if audio_ramp_factor > 0.0:
-		movement_audio.volume_db = lerp(-80.0, 0.0, ease(audio_ramp_factor, 0.1))
+		movement_audio.volume_db = lerp(-80.0, 0.0, ease(audio_ramp_factor, 0.3))
 	else:
 		movement_audio.stop()
 
