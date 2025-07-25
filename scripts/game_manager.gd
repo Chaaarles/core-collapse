@@ -30,7 +30,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if game_over:
 		return
-		
+
 	time += delta
 
 	var difficulty_ratio: float = ease(clamp(time / time_to_max_difficulty, 0.0, 1.0), difficulty_curve)
@@ -54,9 +54,24 @@ func _process(delta: float) -> void:
 func _on_core_repair() -> void:
 	score += 1
 	%ScoreLabel.text = str(score)
+	%FinalScore.text = str(score)
 
 
 func _on_core_decayed() -> void:
-	print("A core has decayed! Game Over.")
 	game_over = true
-	
+	%GameOverContainer.visible = true
+
+
+func _input(event: InputEvent) -> void:
+	if (event.is_action_pressed("restart_game") && game_over):
+		%GameOverContainer.visible = false
+		game_over = false
+		score = 0
+		time = 0.0
+		decay_countdown = 2.0
+		for core_path in cores:
+			var core: Node = get_node(core_path)
+			if core.has_method("reset"):
+				core.reset()
+		%ScoreLabel.text = "0"
+		%FinalScore.text = "0"

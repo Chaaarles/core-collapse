@@ -106,3 +106,15 @@ func _input(event: InputEvent) -> void:
 
 signal repair_signal
 signal decayed_signal
+
+
+func reset() -> void:
+	decay_countdown = 0.0
+	brokenCore.visible = false
+	arc.visible = false
+	arcOutline.visible = false
+	repair_audio_player.stop()
+	decay_audio_player.stop()
+	arc.color = initial_color
+	arcOutline.color = Color(0.0, 0.0, 0.0, 1.0)
+	brokenCore.modulate = Color(1.0, 1.0, 1.0, 1.0)
